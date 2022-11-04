@@ -8,6 +8,7 @@ This site is deployed on Netlify. [Click here to view site](https://lancet-asses
 
 - [Next.js](https://nextjs.org/)
 - [MUI](https://mui.com/)
+- [Supabase](https://supabase.com/)
 
 ## To Run Locally
 
@@ -16,6 +17,8 @@ First, install the dependancies:
 ```bash
 npm install
 ```
+
+You'll also need the environment variables to create the Supabase client.
 
 Then, to run the development server:
 
