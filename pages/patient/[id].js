@@ -63,7 +63,7 @@ export default function PatientPage() {
         {patient.full_name}
       </Typography>
 
-      <pre>{JSON.stringify(patient)}</pre>
+      <pre>{JSON.stringify(patient, null, 2)}</pre>
     </Container>
   )
 }
