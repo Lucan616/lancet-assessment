@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Link from "next/link"
 // 👇 MUI COMPONENT IMPORTS
 import { Box, Divider, Fab, List, ListItem, ListItemText, TextField } from "@mui/material"
@@ -6,51 +6,33 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import AddIcon from '@mui/icons-material/Add';
 import RefreshIcon from '@mui/icons-material/Refresh';
 // 👇 MY COMPONENT IMPORTS
-import PatientMenuItem from "../PatientMenuItem";
+import PatientDrawerItem from "../PatientDrawerItem";
 import stringsInclude from "../../helpers/stringsInclude";
+import { usePatients } from "../../context/patients";
 
 /*
   TODO: 
 
   - give extra visual feedback to user when they click the refresh button
-  - add button to clear input field if the input field has a value
 */
 
 export default function PatientsDrawerContent() {
-  const [patients, setPatients] = useState([])
-  const [loadingPatients, setLoadingPatients] = useState(true)
   const [filterText, setFilterText] = useState('')
-
-  // LOADS PATIENTS
-  const fetchPatients = async () => {
-    try {
-      const data = await fetch('/api/patients').then(res => res.json())
-      setPatients(data)
-    } catch (error) {
-      console.log(error)
-    } finally {
-      setLoadingPatients(false)
-    }
-  }
+  const { patients, loadingPatients, fetchPatients } = usePatients()
 
   // UPDATE FILTER TEXT STATE
   const updateFilterText = (e) => {
     setFilterText(e.target.value.toLowerCase())
   }
 
-  // INITIAL FETCH FOR PATIENTS
-  useEffect(() => {
-    fetchPatients();
-  }, [])
-
   // GENERATE PATIENT ELEMENTS
   const patientListElements = patients
-    .filter(({ id, name }) => {
-      return stringsInclude(filterText, [id, name])
+    .filter(({ id, full_name, national_identity_number }) => {
+      return stringsInclude(filterText, [id, full_name, national_identity_number])
     })
     .map((patient) => {
       return (
-        <PatientMenuItem key={patient.id} data={patient} />
+        <PatientDrawerItem key={patient.id} data={patient} />
       )
     })
 
@@ -65,7 +47,13 @@ export default function PatientsDrawerContent() {
     <Box>
       {/* 👇 Filter input */}
       <Box sx={{ display: 'flex', alignItems: 'flex-end', padding: '0.75rem' }}>
-        <TextField fullWidth label="Filter" variant="standard" onChange={updateFilterText} />
+        <TextField 
+          label="Filter" 
+          variant="standard" 
+          type="search"
+          fullWidth 
+          onChange={updateFilterText} 
+        />
         <FilterListIcon sx={{ color: 'action.active', ml: 1, my: 0.5 }} />
       </Box>
       <Divider />

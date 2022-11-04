@@ -4,6 +4,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import CssBaseline from '@mui/material/CssBaseline';
 
+import PatientsProvider from '../context/patients'
 import Layout from '../components/Layout'
 // import '../styles/globals.css'
 
@@ -11,9 +12,11 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <CssBaseline />
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <PatientsProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </PatientsProvider>
     </>
   )
 }

@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { Container, Typography } from "@mui/material";
 import { useState, useEffect } from "react";
+import supabase from "../../utils/supabase";
 
 export default function PatientPage() {
   const router = useRouter();
@@ -13,16 +14,26 @@ export default function PatientPage() {
   const fetchPatient = async (patientId) => {
     try {
       setLoadingPatient(true)
-      const data = await fetch(`/api/patients/${patientId}`).then(res => res.json());
+
+      const { data, error } = await supabase
+        .from('patients')
+        .select()
+        .eq('id', patientId)
+        .single()
+
+      if (error) throw error
+
       setPatient(data)
     } catch (error) {
       console.log(error)
+      alert(error.message)
     } finally {
       setLoadingPatient(false)
     }
   }
 
   useEffect(() => {
+    if (!id) return
     fetchPatient(id)
   }, [id])
 
@@ -49,7 +60,7 @@ export default function PatientPage() {
   return (
     <Container>
       <Typography variant="h4">
-        {patient.name}
+        {patient.full_name}
       </Typography>
 
       <pre>{JSON.stringify(patient)}</pre>
