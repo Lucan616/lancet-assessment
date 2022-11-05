@@ -46,17 +46,19 @@ export default function PatientsDrawerContent() {
   return (
     <Box>
       {/* 👇 Filter input */}
-      <Box sx={{ display: 'flex', alignItems: 'flex-end', padding: '0.75rem' }}>
-        <TextField 
-          label="Filter" 
-          variant="standard" 
-          type="search"
-          fullWidth 
-          onChange={updateFilterText} 
-        />
-        <FilterListIcon sx={{ color: 'action.active', ml: 1, my: 0.5 }} />
+      <Box sx={{ position: 'sticky', top: 0, zIndex: 10 }}>
+        <Box sx={{ display: 'flex', alignItems: 'flex-end', padding: '0.75rem',  backgroundColor: '#fff' }}>
+          <TextField 
+            label="Filter" 
+            variant="standard" 
+            type="search"
+            fullWidth 
+            onChange={updateFilterText} 
+          />
+          <FilterListIcon sx={{ color: 'action.active', ml: 1, my: 0.5 }} />
+        </Box>
+        <Divider />
       </Box>
-      <Divider />
       {/* 👇 Patients List */}
       <List>
         {listDisplay}

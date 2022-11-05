@@ -1,7 +1,8 @@
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Container, Typography } from "@mui/material";
-import { useState, useEffect } from "react";
 import supabase from "../../utils/supabase";
+import RequisitionsTable from "../../components/RequisitionsTable";
 
 export default function PatientPage() {
   const router = useRouter();
@@ -64,6 +65,85 @@ export default function PatientPage() {
       </Typography>
 
       <pre>{JSON.stringify(patient, null, 2)}</pre>
+
+      <Typography variant="h5" gutterBottom>
+        Requisitions
+      </Typography>
+
+      <RequisitionsTable requisitions={DUMMY_REQUISITIONS} />
     </Container>
   )
 }
+
+const DUMMY_REQUISITIONS = [
+  {
+    id: '1',
+    dateSubmitted: '2022-11-05',
+    referringPhysician: 'Dr. Strange',
+    tests: [
+      {
+        id: '1',
+        testName: 'Magic Abilities',
+        comment: 'Lorem, ipsum.',
+        normalRange: 0,
+        testResult: 0
+      },
+      {
+        id: '2',
+        testName: 'Astral Projection',
+        comment: 'Lorem, ipsum.',
+        normalRange: 0,
+        testResult: 0
+      },
+      {
+        id: '3',
+        testName: 'Portal Conjuring',
+        comment: 'Lorem, ipsum.',
+        normalRange: 0,
+        testResult: 0
+      },
+    ]
+  },
+  {
+    id: '2',
+    dateSubmitted: '2022-11-05',
+    referringPhysician: 'Dr. Phil',
+    tests: [
+      {
+        id: '2',
+        testName: 'Normality',
+        comment: 'Lorem, ipsum dolor.',
+        normalRange: 0,
+        testResult: 0
+      },
+    ]
+  },
+  {
+    id: '3',
+    dateSubmitted: '2022-11-05',
+    referringPhysician: 'Doctor Evil',
+    tests: [
+      {
+        id: '3',
+        testName: 'Evilness',
+        comment: 'Lorem ipsum dolor sit amet.',
+        normalRange: 0,
+        testResult: 0
+      },
+    ]
+  },
+  {
+    id: '4',
+    dateSubmitted: '2022-11-05',
+    referringPhysician: 'Dr Pepper',
+    tests: [
+      {
+        id: '4',
+        testName: 'Sugar?',
+        comment: 'Lorem ipsum dolor sit amet consectetur.',
+        normalRange: 0,
+        testResult: 0
+      },
+    ]
+  },
+]
