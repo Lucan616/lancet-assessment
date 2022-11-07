@@ -9,7 +9,7 @@ import Link from "next/link";
 import { ListItem, ListItemAvatar, Avatar, Divider, ListItemText } from "@mui/material";
 import supabase from "../../utils/supabase";
 
-export default function PatientDrawerItem({ data }) {
+export default function PatientDrawerItem({ data, isActive }) {
   const { 
     id, 
     full_name, 
@@ -23,10 +23,13 @@ export default function PatientDrawerItem({ data }) {
     .from('patient-avatars')
     .getPublicUrl(avatar_path)
 
+  // STYLES FOR IF THE CURRENT PAGE IS THAT OF THE PATIENT
+  const activeStyles = isActive ? { borderRight: 3, borderColor: 'primary.main' } : {}
+
   return (
     <>
       <Link href={`/patient/${id}`} style={{ color: "inherit", textDecoration: "none"}}>
-        <ListItem alignItems="flex-start">
+        <ListItem alignItems="flex-start" sx={activeStyles}>
             <ListItemAvatar>
               <Avatar src={avatar_url} alt={full_name} />
             </ListItemAvatar>

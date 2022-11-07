@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { Container, Typography } from "@mui/material";
+import { Container, Typography, Box } from "@mui/material";
 import supabase from "../../utils/supabase";
 import RequisitionsTable from "../../components/RequisitionsTable";
 
@@ -58,13 +58,22 @@ export default function PatientPage() {
     )
   }
 
+  const dataItemStyles = { display: 'flex', justifyContent: 'space-between', borderBottom: 1, borderColor: 'grey.300' } 
+
   return (
     <Container>
       <Typography variant="h4">
         {patient.full_name}
       </Typography>
 
-      <pre>{JSON.stringify(patient, null, 2)}</pre>
+      <Box sx={{ width: { sx: 1, md: 1/2 }, marginY: 4 }}>
+        <Box sx={dataItemStyles}>
+          <Typography>ID:</Typography> <Typography>{patient.national_identity_number}</Typography>
+        </Box>
+        <Box sx={dataItemStyles}>
+          <Typography>Date of birth:</Typography> <Typography>{patient.date_of_birth}</Typography>
+        </Box>
+      </Box>
 
       <Typography variant="h5" gutterBottom>
         Requisitions

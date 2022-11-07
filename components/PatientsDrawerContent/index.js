@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useRouter } from "next/router";
 import Link from "next/link"
 // 👇 MUI COMPONENT IMPORTS
 import { Box, Divider, Fab, List, ListItem, ListItemText, TextField } from "@mui/material"
@@ -17,6 +18,7 @@ import { usePatients } from "../../context/patients";
 */
 
 export default function PatientsDrawerContent() {
+  const router = useRouter()
   const [filterText, setFilterText] = useState('')
   const { patients, loadingPatients, fetchPatients } = usePatients()
 
@@ -31,8 +33,10 @@ export default function PatientsDrawerContent() {
       return stringsInclude(filterText, [id, full_name, national_identity_number])
     })
     .map((patient) => {
+      const active = router.query.id === patient.id
+
       return (
-        <PatientDrawerItem key={patient.id} data={patient} />
+        <PatientDrawerItem key={patient.id} data={patient} isActive={active} />
       )
     })
 
